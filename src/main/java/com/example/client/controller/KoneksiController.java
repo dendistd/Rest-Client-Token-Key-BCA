@@ -46,7 +46,15 @@ public class KoneksiController {
 		//GAGAL CREATE
 		if(result.getErrorSchema() == null) {
 			System.out.println("Controller => Masuk Blok IF Gagal");
-					
+			
+			//GAGAL CREATE -> KODE CABANG TIDAK ADA DALAM DB
+			if(result.getOutputSchema().get("reason").contains("No value present")) {
+				System.out.println("Controller => KODE CABANG TIDAK ADA DALAM DB");
+				ErrorSchema errorFail = new ErrorSchema(ErrorEnum.FAIL_CREATE);
+				ResponseSchema<GagalOutputSchema> responFail = new ResponseSchema<>(errorFail);
+				responFail.setOutputSchema(new GagalOutputSchema("Kode Cabang Doesn't Exist On DB"));
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responFail);
+			}
 			//Gagal Menyimpan Data, Input Param Tidak Memenuhi Syarat
 			if(result.getOutputSchema().get("reason").contains("Gagal Menyimpan Data, Input Param Tidak Memenuhi Syarat")) {
 				System.out.println("Controller => Gagal Menyimpan Data, Input Param Tidak Memenuhi Syarat");
