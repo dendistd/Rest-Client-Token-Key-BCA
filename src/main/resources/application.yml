@@ -1,0 +1,18 @@
+## Server properties
+server:
+  port: 8091
+  
+## Spring DATASOURCE
+spring:
+  jackson:
+    time-zone: GMT+7
+    serialization:
+      write-dates-as-timestamps: false
+    property-naming-strategy: SNAKE_CASE
+    deserialization:
+      fail-on-unknown-properties: true
+ 
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: system
+    password: Radenfaheza25
